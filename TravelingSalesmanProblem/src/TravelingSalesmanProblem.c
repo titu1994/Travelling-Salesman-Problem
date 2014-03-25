@@ -10,27 +10,9 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-
 #define IN 999
 
 int a[10][10],visited[10],n,cost=0;
-void mincost(int city) {
-	int i,ncity;
-	visited[city]=1;
-
-	printf("%d -->",city+1);
-	ncity = least(city);
-
-	if(ncity == IN){
-		ncity = 0;
-		printf("%d", ncity+1);
-		cost += a[city][ncity];
-		return;
-	}
-
-	mincost(ncity);
-}
-
 
 int least(int c) {
 	int i,nc=IN;
@@ -50,6 +32,22 @@ int least(int c) {
 
 	return nc;
 }
+void mincost(int city) {
+	int ncity;
+	visited[city]=1;
+
+	printf("%d -->",city+1);
+	ncity = least(city);
+
+	if(ncity == IN){
+		ncity = 0;
+		printf("%d", ncity+1);
+		cost += a[city][ncity];
+		return;
+	}
+
+	mincost(ncity);
+}
 
 void put() {
 	printf("\n\nMinimum cost:");
@@ -57,9 +55,9 @@ void put() {
 }
 
 
-void main() {
+int main() {
 	int i,j;
-	clrscr();
+	setbuf(stdout, NULL);
 
 	printf("Enter No. of Cities: ");
 	scanf("%d",&n);
@@ -87,5 +85,5 @@ void main() {
 	mincost(0);
 	put();
 
-	getch();
+	return 0;
 }
